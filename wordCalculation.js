@@ -1,0 +1,46 @@
+const _ = require("lodash");
+const sizeWithPercent = [
+    { threshold: 80, size: 'Huge' },
+    { threshold: 60, size: 'Big' },
+    { threshold: 30, size: 'Normal' },
+    { threshold: 0, size: 'Small' },
+];
+
+const convertToWords = (textFiles = []) => {
+    try {
+        const text = textFiles.toString()
+        return text.toLowerCase().match(/\b\w+\b/g);
+    } catch (error) {
+        console.error("Error - countWords: ", error);
+        throw new Error(error);
+    }
+};
+
+const calculateAppearancePercent = (words = []) => {
+    try {
+        const wordCount = _.countBy(words);
+        words = _.sortBy(Object.keys(wordCount), word => -wordCount[word]);
+        const wordsWithPercent = [];
+        words?.map(word => {
+            if (!wordsWithPercent.some(wordData => wordData.word === word)) {
+                const percent = (wordCount[word] * 100) / words.length;
+                wordsWithPercent.push({
+                    word,
+                    counts: wordCount[word],
+                    // percent, // If needed then return the percentage as well.
+                    size: sizeWithPercent.find(obj => percent > obj.threshold).size
+                })
+            }
+        })
+        return wordsWithPercent;
+
+    } catch (error) {
+        console.error("Error - calculateAppearancePercent: ", error);
+        throw new Error(error);
+    }
+};
+
+module.exports = {
+    convertToWords,
+    calculateAppearancePercent
+}
