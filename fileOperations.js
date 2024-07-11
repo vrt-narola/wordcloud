@@ -6,7 +6,7 @@ const readFiles = () => {
         const fileDirPath = path.join(`${baseDir}/textFiles`);
         const files = fs.readdirSync(fileDirPath).filter(file => path.extname(file) == ".txt");
 
-        return Promise.all(files.map(file => {
+        return Promise.all([files[0]].map(file => {
             const filePath = path.join(fileDirPath, file);
             return fs.promises.readFile(filePath, "utf-8", (error, fileData) => {
                 if (error) throw new Error(error);
@@ -22,7 +22,7 @@ const readFiles = () => {
 const writeOutputToFile = (results) => {
     try {
         const outputFilePath = path.join(baseDir, 'words_categorization.txt');
-        const fileContent = results.map(result => `${result.word.toUpperCase()}, ${result.counts}, ${result.size}`).join('\n');
+        const fileContent = results.map(result => `${result.word}, ${result.counts}, ${result.percent}, ${result.size}`).join('\n');
         fs.writeFileSync(outputFilePath, fileContent, 'utf-8');
         console.log(`Results have been written to ${outputFilePath}`);
     } catch (error) {
