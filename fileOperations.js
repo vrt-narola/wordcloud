@@ -22,7 +22,7 @@ const readFiles = () => {
 const writeOutputToFile = (results) => {
     try {
         const outputFilePath = path.join(baseDir, 'words_categorization.txt');
-        const fileContent = results.map(result => `${result.word}, ${result.counts}, ${result.percent}, ${result.size}`).join('\n');
+        const fileContent = results.map(result => `${result.word}, ${result.counts}, ${result.size}`).join('\n');
         fs.writeFileSync(outputFilePath, fileContent, 'utf-8');
         console.log(`Results have been written to ${outputFilePath}`);
     } catch (error) {
