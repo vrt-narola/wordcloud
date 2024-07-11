@@ -6,7 +6,7 @@ const readFiles = () => {
         const fileDirPath = path.join(`${baseDir}/textFiles`);
         const files = fs.readdirSync(fileDirPath).filter(file => path.extname(file) == ".txt");
 
-        return Promise.all([files[0]].map(file => {
+        return Promise.all(files.map(file => {
             const filePath = path.join(fileDirPath, file);
             return fs.promises.readFile(filePath, "utf-8", (error, fileData) => {
                 if (error) throw new Error(error);

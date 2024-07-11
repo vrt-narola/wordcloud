@@ -22,7 +22,7 @@ const calculateAppearancePercent = (words = []) => {
         const wordsWithPercent = [];
         const maxCount = wordCount[words[0]];
         words?.map(word => {
-            if (!wordsWithPercent.some(wordData => wordData.word === word)) {
+            if (!wordsWithPercent.some(wordData => wordData.word === word)/* && wordCount[word] > 1*/) { // If you want to ignore single item, you can enble the code.
                 const percent = (wordCount[word] * 100) / maxCount;
                 wordsWithPercent.push({
                     word,
